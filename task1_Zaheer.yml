@@ -1,0 +1,51 @@
+- hosts: all
+  gather_facts: false
+  tasks:
+  - name: "Yum Repo"
+    yum_repository:
+      name: "fury"
+      description: "Docker Repo"
+      baseurl: "http://download.docker.com/linux/centos/7/x86_64/stable/"
+      enabled: yes
+      gpgcheck: no
+
+  - name: "Install Docker software"
+    command: "yum install docker-ce -y --nobest"
+ 
+  - name: "Docker Service started"
+    service:
+      name: "docker"
+      state: started
+      enabled: yes
+
+  - name: "Installing Python"
+    package:
+      name: "python3"
+      state: present
+
+  - name: " InstallDocker Python Library"
+    pip:
+      name: "docker-py"
+      state: present
+  
+  - name: "Pull a Docker OS image"
+    docker_image:
+      name: "httpd"
+      source: "pull"
+
+  - name: "Push HTML file to destination"
+    copy:
+      src: "task.html"
+      dest: "/var/www/html/index.html"      
+
+  - name: "Run / Create a container"          
+    docker_container:
+      name: "WebApp_Zaheer"
+      image: httpd
+      state: started
+      exposed_ports:
+              - "80"      
+      ports:
+              - "8080:9000"
+      volumes:
+              - "/var/www/html/:/usr/local/apache2/htdocs/:ro"
