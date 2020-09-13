@@ -14,3 +14,13 @@ Write an Ansible PlayBook that does the following operations in the managed node
 🔹 Run the httpd container and expose it to the public
 
 🔹 Copy the html code in /var/www/html directory and start the web server.
+
+
+
+**#Task - 2:** 👨🏻‍💻
+
+🔹 Launch an AWS instance with the help of ansible.
+
+🔹 Retrieve the public IP which is allocated to the launched instance.
+
+🔹 With the help of the retrieved Public IP configure the web server in the launched instance.
